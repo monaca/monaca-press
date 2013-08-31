@@ -38,7 +38,7 @@
       <label><input type="radio" value="<?php print esc_attr($key); ?>" name="project"><?php print esc_attr($key);?></label>
     </th>
     <td>
-      <?php print esc_attr($project['info']); ?>
+      <?php print nl2br(esc_attr($project['info'])); ?>
     </td>
   </tr>
 <?php endforeach;?>

@@ -13,6 +13,7 @@ add_action('admin_menu', 'monaca_press_admin_menu');
 register_activation_hook( __FILE__, 'monaca_press_activate');
 
 register_uninstall_hook(__FILE__, 'monaca_press_uninstall_hook');
+
 function monaca_press_uninstall_hook()
 {
   delete_option('monaca_press_projects');
@@ -23,7 +24,8 @@ function monaca_press_activate()
   $projects = get_option('monaca_press_projects');
   $projects['monaca-post'] = array(
     'path' => __file__,
-    'info' => '投稿アプリ',
+    'info' => '投稿アプリ
+     設置後「js/config.js」ファイルの「xmlrpc_endpoint」をご自分のアドレスに書き換えてください',
   );
   update_option('monaca_press_projects', $projects);
 }
