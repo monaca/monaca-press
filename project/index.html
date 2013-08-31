@@ -1,0 +1,205 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <meta charset="utf-8">
+    <script src="plugins/plugin-loader.js"></script>
+    <script src="js/libs/mimic.js"></script>
+    <script src="js/libs/jquery-2.0.3.min.js"></script>
+    <script>
+      /**
+      * jQueryMobileの体感速度を向上させるための記述
+      * 
+      */
+      $(document).on("mobileinit", function(){
+        $.mobile.defaultPageTransition = 'none';
+        $.mobile.metaViewportContent = false; 
+      });
+      
+      $(document).on('vclick', 'a', function(e){
+        e.preventDefault();
+        var link = $(this);
+
+        // footer対応
+        $("nav a").removeClass( $.mobile.activeBtnClass );
+        $("a[name="+ $(this).attr('name') +"]").addClass( $.mobile.activeBtnClass );
+        $.mobile.changePage(link.attr('href'));
+      });
+
+    </script>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+        <script src="js/libs/jquery.mobile-1.4.0-alpha.2.js"></script>
+    <script>
+      // Set virtual screen width size to 640 pixels (横幅640pxに設定)
+      monaca.viewport({width: 480});
+    </script>
+    <link rel="stylesheet" href="plugins/plugin-loader.css" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.0-alpha.2.min.css">
+
+  </head>
+  <body>
+    <div data-role="page" id="wp_post">
+      <div data-role="header" data-position="inline" data-backbtn="false"  data-theme="b">
+        <h1>通常投稿</h1>
+        <a href="#config" data-icon="gear" class="ui-btn-right  ui-icon-gear">設定</a>
+      </div><!-- /header -->
+      <div data-role="content">	
+        <h2>タイトルと記事</h2>
+		    <p>記事を書いて投稿してください</p>
+        <form id="wp_post" action="index.html">
+          <label for="title">タイトル:</label>
+          <input id="post_title" type="text" name="title" value="ダミータイトル">
+          <label for="body">記事:</label>
+          <textarea name="content" id="post_content">ダミーの本文です</textarea>
+          <h2>カテゴリー</h2>
+          <fieldset data-role="controlgroup" data-type="horizontal" name="category">
+          </fieldset>
+
+          <h2>アイキャッチ</h2>
+          <img class="thumbnail" id="post_thumbnail" name="thumbnail" src="">
+          <div class="ui-grid-b">
+            <div class="ui-block-a">
+              <input type="button" value="カメラ起動" onclick="setThumbnail('post_thumbnail','camera')" data-theme="b">
+            </div>
+            <div class="ui-block-b">
+              <input type="button" value="ライブラリ" onclick="setThumbnail('post_thumbnail','library')" data-theme="b">
+            </div>
+            <div class="ui-block-c">
+              <input type="button" value="解除" onclick="setThumbnail('post_thumbnail')">
+            </div>
+          </div>
+          <input type="hidden" name="type" value="post"> 
+          <input type="submit" value="投稿" name="submit">
+        </form>
+	    </div><!-- /content -->
+      <footer data-role="footer" data-id="footer" data-position="fixed" data-tap-toggle="false"  data-theme="b">
+        <nav data-role="navbar">
+          <ul>
+    	      <li><a href="#wp_post" class="ui-btn-active"  name="wp_post">通常投稿</a></li>
+  		      <li><a href="#wp_page" name="wp_page">固定ページ</a></li>
+			      <li><a href="#wp_custom1" name="wp_custom1">カスタム投稿</a></li>
+		      </ul>
+	      </nav><!-- /navbar -->
+      </footer><!-- /footer -->
+    </div><!-- /page -->
+    <div data-role="page"id="wp_page">
+      <div data-role="header" data-position="inline" data-backbtn="false"  data-theme="b">
+        <h1>固定ページ</h1>
+        <a href="#config" data-icon="gear" class="ui-btn-right">設定</a>
+      </div><!-- /header -->
+
+      <div data-role="content">	
+        <h2>タイトルと記事</h2>
+		    <p>記事を書いて投稿してください</p>
+        <form id="wp_page" action="index.html">
+          <label for="title">タイトル:</label>
+          <input type="text" name="title" value="ダミータイトル">
+          <label for="body">記事:</label>
+          <textarea name="content">ダミーの本文です</textarea>
+          <h2>アイキャッチ</h2>
+          <img class="thumbnail" id="page_thumbnail" name="thumbnail" src="">
+          <div class="ui-grid-b">
+            <div class="ui-block-a">
+              <input id="camera" name="post_image" type="button" value="カメラ起動" onclick="setThumbnail('page_thumbnail','camera')" data-theme="b">
+            </div>
+            <div class="ui-block-b">
+              <input id="library" name="post_photo" type="button" value="ライブラリ" onclick="setThumbnail('page_thumbnail','library')" data-theme="b">
+            </div>
+            <div class="ui-block-c">
+              <input name="clear_thumnail" type="button" value="解除" onclick="setThumbnail('page_thumbnail')">
+            </div>
+          </div>
+          <input type="submit" value="投稿" name="submit">
+        </form>
+      </div><!-- /content -->
+      <footer data-role="footer" data-id="footer" data-position="fixed" data-tap-toggle="false"  data-theme="b">
+        <nav data-role="navbar">
+          <ul>
+            <li><a href="#wp_post" name="wp_post">通常投稿</a></li>
+  		      <li><a href="#wp_page" name="wp_page">固定ページ</a></li>
+			      <li><a href="#wp_custom1" name="wp_custom1">カスタム投稿</a></li>
+		      </ul>
+	      </nav><!-- /navbar -->
+      </footer><!-- /footer -->
+    </div><!-- /page -->
+    <div data-role="page" id="wp_custom1">
+      <div data-role="header" data-position="inline" data-backbtn="false"  data-theme="b">
+      <h1>カスタム投稿[books]</h1>
+        <a href="#config" data-icon="gear" class="ui-btn-right">設定</a>
+      </div><!-- /header -->
+      <div data-role="content">
+        <p>架空のカスタム投稿タイプbookに対する投稿を行います。実運用する際は自身のシステムのカスタム投稿タイプに合わせてください</p>
+        <p>book仕様：xxxxx</p>
+        <h2>タイトルと記事</h2>
+	      <p>記事を書いて投稿してください</p>
+        <form id="wp_custom1" action="index.html">
+          <label for="title">タイトル:</label>
+          <input type="text" name="title" value="イラストでよくわかるPHP はじめてのWebプログラミング入門">
+          <label for="body">記事:</label>
+          <textarea name="content" id="content">この本はWEB関係者の奥様方に大人気です。</textarea>            
+          <h2>カスタムフィールド</h2>
+          <label for="isbn10">ISBN10</label>
+          <input type="text" name="custom_fields[isbn10]" id="isbn10" value="4844332953">
+          <label for="isbn10">ISBN13</label>
+          <input type="text" name="custom_fields[isbn13]" id="isbn13" value="978-4844332954">        
+          <h2>カスタムタクソノミー</h2>
+          <fieldset data-role="controlgroup" data-type="horizontal">
+            <input type="checkbox" name="book_genre[]" value="13" id="t13"><label for="t13">小説</label>
+            <input type="checkbox" name="book_genre[]" value="14" id="t14"><label for="t14">ラノベ</label>
+          </fieldset>
+
+          <h2>アイキャッチ</h2>
+          <img class="thumbnail" id="custom1_thumbnail" name="thumbnail" src="">
+          <div class="ui-grid-b">
+            <div class="ui-block-a">
+              <input id="camera" name="post_image" type="button" value="カメラ起動" onclick="setThumbnail('custom1_thumbnail','camera')" data-theme="b">
+            </div>
+            <div class="ui-block-b">
+              <input id="library" name="post_photo" type="button" value="フォトライブラリ" onclick="setThumbnail('custom1_thumbnail','library')" data-theme="b">
+            </div>
+            <div class="ui-block-c">
+              <input id="unset_post_thumbnail" name="clear_thumnail" type="button" value="アイキャッチ解除" onclick="setThumbnail('custom1_thumbnail')">
+            </div>
+          </div>
+          <input type="submit" value="投稿" name="submit">
+        </form>
+	    </div><!-- /content -->
+      <footer data-role="footer" data-id="footer" data-position="fixed" data-tap-toggle="false"  data-theme="b">
+        <nav data-role="navbar">
+          <ul>
+            <li><a href="#wp_post" name="wp_post">通常投稿</a></li>
+  		      <li><a href="#wp_page" name="wp_page">固定ページ</a></li>
+			      <li><a href="#wp_custom1"  name="wp_custom1">カスタム投稿</a></li>
+		      </ul>
+	      </nav><!-- /navbar -->
+      </footer><!-- /footer -->
+    </div><!-- /page -->
+    <div data-role="page" id="config">
+      <div data-role="header" data-position="inline" data-backbtn="false"  data-theme="b">
+        <h1>設定</h1>
+      </div><!-- /header -->
+
+      <div data-role="content">	
+        ユーザー名やパスワードを設定して、ローカルストレージに保存します。      
+        <form id="save_config" action="config.html">
+          <label for="username">ユーザー名:</label>
+          <input id="username" type="text" name="username" value="">
+          <label for="password">パスワード:</label>
+          <input id="password" type="text" name="password" value="">
+          <input type="submit" value="設定保存" name="submit">
+        </form>
+	      </div><!-- /content -->
+        <div data-role="footer" data-id="footer" data-position="fixed"  data-theme="b">
+          <nav  data-role="navbar">
+		        <ul>
+			        <li><a href="index.html" name="wp_post">通常投稿</a></li>
+  		        <li><a href="index.html#wp_page" name="wp_page">固定ページ</a></li>
+			        <li><a href="index.html#wp_custom1"  name="wp_custom1">カスタム投稿</a></li>
+		        </ul>
+	        </nav><!-- /navbar -->
+        </div><!-- /footer -->
+
+    </div><!-- /page -->
+  </body>
+</html>
