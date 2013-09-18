@@ -8,7 +8,7 @@ Author URI: http://monaca.mobi/
 Tags: iOS,Android,mobile,app
 Requires at least: 3.6.0
 Tested up to: 3.6
-License: GPLv2 
+License: GPL v2 or Later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
