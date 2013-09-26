@@ -1,12 +1,16 @@
 <?php
 /*
 Plugin Name: MonacaPress
-Plugin URI: http://press.monaca.mobi/
-Description: MonacaPress is Plugin for Wordpress. This Plugin can Upload some source code to monaca.mobi.
-Version: 0.1
+Plugin URI: https://github.com/monaca/monaca-press
+Description: MonacaPress plug-in is WordPress app development support tool.
+Version: 0.1.0
 Author: YUKI OKAMOTO (HN:Justice)
 Author URI: http://monaca.mobi/
-License: GPL2
+Tags: iOS,Android,mobile,app
+Requires at least: 3.6.0
+Tested up to: 3.6
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 add_action('admin_menu', 'monaca_press_admin_menu');
@@ -89,7 +93,7 @@ class monaca_uploader
   {
     $this->email = $email;
     $this->password = $password;
-    $this->webdav = $webdav;
+    $this->webdav = rtrim($webdav, '/');
     $this->project_path = $project_path;
     $this->ch = curl_init();
 

@@ -148,7 +148,7 @@ function uploadFile(src) {
   var filename = +new Date() + '.jpg';
   var data = {
     name:filename,
-    type:'jpeg',
+    type:'image/jpeg',
     bits:file,
   };
   

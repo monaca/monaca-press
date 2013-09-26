@@ -12,8 +12,7 @@ var app_config = {
     targetHeight: 100
   },
   category:{
-    1: '未分類',
-    15:'技術'
+    1: '未分類'
   }
 };
 
