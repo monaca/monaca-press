@@ -50,7 +50,7 @@ function monaca_press_setting()
   // フォーム処理
   if ($_POST['submit']) {
     // 設定保存処理
-    if ($_POST['save'] === '1') {
+    if (isset($_POST['save']) && $_POST['save'] === '1') {
       update_option('monaca_setting_email', $_POST['email']);
       update_option('monaca_setting_password', $_POST['password']);
       update_option('monaca_setting_webdav', $_POST['webdav']);
@@ -118,7 +118,7 @@ class monaca_uploader
       }  
 
       $target = rtrim($path, '/').'/'.$child_path;  
-      $url = $this->webdav.'www/'.substr($target, strlen($this->project_path));
+      $url = $this->webdav.'/www/'.substr($target, strlen($this->project_path));
 
       if (is_dir($target)) {  
         $this->uploadDir($target, $url);
