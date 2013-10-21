@@ -28,8 +28,9 @@ function monaca_press_activate()
   $projects = get_option('monaca_press_projects');
   $projects['monaca-post'] = array(
     'path' => __file__,
-    'info' => '投稿アプリ
-     設置後「js/config.js」ファイルの「xmlrpc_endpoint」をご自分のアドレスに書き換えてください',
+    'info' => 'MonacaPost is Mobile Application for Post (and "Page" and "Custom Post Type").
+    after you shoud check "js/config.js" and rewreite some configration.
+    see http://press.monaca.mobi/ best regards.'
   );
   update_option('monaca_press_projects', $projects);
 }
@@ -45,11 +46,38 @@ function monaca_press_admin_menu()
   );
 }
 
+/**
+ *  Check Paramas and upload project files. 
+ */
 function monaca_press_setting() 
 {
-  // フォーム処理
-  if ($_POST['submit']) {
-    // 設定保存処理
+  if (isset($_POST['submit']) && $_POST['submit']) {
+    // check email
+    if (!isset($_POST['email']) || !is_email($_POST['email'])) {
+      wp_die('need valid email');
+    }
+    // check password
+    if (!isset($_POST['password']) || strlen($_POST['password']) == 0) {
+      wp_die('need password');
+    }
+    // check webdav url 
+    if (!isset($_POST['webdav']) || !preg_match('/^https:\/\/dav-.*monaca.mobi$/', $_POST['webdav'])) {
+      wp_die('webdav url format must be https://dav-******.monaca.mobi');
+    }
+    // check project path
+    if (!isset($_POST['project']) || strlen($_POST['project']) == 0) {
+      wp_die('need project');
+    }
+
+    // check project dir
+    $projects = get_option('monaca_press_projects');
+    $project_path = $projects[$_POST['project']]['path'];
+    $project_path = dirname($project_path)."/project/";
+    if (!is_dir($project_path)) {
+      wp_die('project path is dead "' .$project_path. '".');
+    }
+
+    // save params 
     if (isset($_POST['save']) && $_POST['save'] === '1') {
       update_option('monaca_setting_email', $_POST['email']);
       update_option('monaca_setting_password', $_POST['password']);
@@ -61,25 +89,21 @@ function monaca_press_setting()
       delete_option('monaca_setting_webdav');
       delete_option('monaca_setting_save');
     }
-    // プロジェクト転送処理
-    $projects = get_option('monaca_press_projects');
-    $project_path = $projects[$_POST['project']]['path'];
-    $project_path = dirname($project_path)."/project/";
 
+    // upload
     $monaca_uploader = new monaca_uploader($_POST['email'], $_POST['password'], $_POST['webdav'], $project_path);
     $monaca_uploader->upload();
   }
 
-  // 設定の読み込み
+  // load params
   $setting = array('save' => '', 'email' => '', 'password' => '', 'webdav' => '');
   $setting['save'] = get_option('monaca_setting_save');
   $setting['email'] = get_option('monaca_setting_email');
   $setting['password'] = get_option('monaca_setting_password');
   $setting['webdav'] = get_option('monaca_setting_webdav');
 
-  // 表示処理
+  // display setting menu
   include 'setting.php';
-
 }
 
 class monaca_uploader

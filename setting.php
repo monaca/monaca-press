@@ -1,4 +1,9 @@
 <h2>Monaca側の設定情報</h2>
+<?php
+if (!function_exists('curl_exec')):
+?><p>このサーバーではcURLライブラリ機能が無効化されているためMonacaPressはファイル転送ができません。</p><?php
+endif;
+?>
 <form action="" method="post" autocomplete="off">
 <table class="form-table">
   <tr>
