@@ -169,7 +169,10 @@ class monaca_uploader
   }
   public function uploadDir($target, $url)
   {
+    $fp = fopen($target, 'r');
+
     curl_setopt($this->ch, CURLOPT_INFILESIZE, 0);
+    curl_setopt($this->ch, CURLOPT_INFILE, $fp);
     curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, "MKCOL");
     curl_setopt($this->ch, CURLOPT_URL, $url);
     curl_exec($this->ch);
